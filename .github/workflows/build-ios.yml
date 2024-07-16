@@ -47,7 +47,7 @@ jobs:
 
 
     - name: Build iOS project
-      run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Development -archivePath build/your_project_name.xcarchive archive \ DEVELOPMENT_TEAM=12345
+      run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Development -archivePath build/your_project_name.xcarchive archive \ DEVELOPMENT_TEAM=12345 CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
     - name: Export IPA
       run: xcodebuild -exportArchive -archivePath build/your_project_name.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist
