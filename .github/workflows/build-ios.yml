@@ -16,14 +16,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Godot
-      uses: abarichello/godot-ci@3.5.3
-      with:
-        godot_version: '3.5.3'
-        export_templates_version: '3.5.3'
+    - name: Download Godot
+      run: |
+        wget https://downloads.tuxfamily.org/godotengine/3.5.3/Godot_v3.5.3-stable_osx.64.zip
+        unzip Godot_v3.5.3-stable_osx.64.zip -d godot
+        sudo mv godot/Godot.app /Applications/Godot.app
+        sudo ln -s /Applications/Godot.app/Contents/MacOS/Godot /usr/local/bin/godot
 
-    - name: Install Xcode
-      run: sudo xcode-select --switch /Applications/Xcode.app
+    - name: Download Godot Export Templates
+      run: |
+        wget https://downloads.tuxfamily.org/godotengine/3.5.3/Godot_v3.5.3-stable_export_templates.tpz
+        mkdir -p ~/.local/share/godot/templates/3.5.3.stable
+        tar -xzf Godot_v3.5.3-stable_export_templates.tpz -C ~/.local/share/godot/templates/3.5.3.stable
 
     - name: Create build directory
       run: mkdir -p build
