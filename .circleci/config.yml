@@ -4,7 +4,7 @@ jobs:
   build:
     macos:
       xcode: "13.2.1"
-    resource_class: medium
+    resource_class: macos-11.0-medium
     steps:
       - checkout
       - run:
