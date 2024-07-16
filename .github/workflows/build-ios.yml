@@ -43,7 +43,7 @@ jobs:
         DISPLAY: :99.0
 
     - name: Build iOS project
-      run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Release -archivePath build/your_project_name.xcarchive archive
+      run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Development -archivePath build/your_project_name.xcarchive archive
 
     - name: Export IPA
       run: xcodebuild -exportArchive -archivePath build/your_project_name.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist
