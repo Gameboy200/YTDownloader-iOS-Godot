@@ -10,6 +10,7 @@ workflows:
       - sudo mv godot/Godot.app /Applications/Godot.app
       - sudo ln -s /Applications/Godot.app/Contents/MacOS/Godot /usr/local/bin/godot
       - mkdir -p ~/Library/Application\ Support/Godot/templates/3.5.3.stable
+      - ls
       - cd ~/Library/Application\ Support/Godot/templates/3.5.3.stable
       - ls
       - wget https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_export_templates.tpz
