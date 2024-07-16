@@ -47,23 +47,10 @@ jobs:
 
 
     - name: Build iOS project
-      run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Development -archivePath build/your_project_name.xcarchive archive \ CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-
-    - name: Prepare exportOptions.plist
-      run: |
-        echo '<?xml version="1.0" encoding="UTF-8"?>' > exportOptions.plist
-        echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> exportOptions.plist
-        echo '<plist version="1.0">' >> exportOptions.plist
-        echo '<dict>' >> exportOptions.plist
-        echo '    <key>method</key>' >> exportOptions.plist
-        echo '    <string>development</string>' >> exportOptions.plist
-        echo '    <key>signingStyle</key>' >> exportOptions.plist
-        echo '    <string>manual</string>' >> exportOptions.plist
-        echo '</dict>' >> exportOptions.plist
-        echo '</plist>' >> exportOptions.plist
+      run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Development -archivePath build/your_project_name.xcarchive archive \ CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
     - name: Export IPA
-      run: xcodebuild -exportArchive -archivePath build/your_project_name.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      run: xcodebuild -exportArchive -archivePath build/your_project_name.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
     - name: Upload IPA to GitHub Artifacts
       uses: actions/upload-artifact@v2
