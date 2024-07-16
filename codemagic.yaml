@@ -16,6 +16,7 @@ workflows:
       - wget https://github.com/godotengine/godot/releases/download/3.5.3-stable/Godot_v3.5.3-stable_export_templates.tpz
       - tar -xzf Godot_v3.5.3-stable_export_templates.tpz -C ~/Library/Application\ Support/Godot/templates/3.5.3.stable
       - cd ~/Library/Application\ Support/Godot/templates/3.5.3.stable/templates
+      - ls
       - mv * ..
       - cd ..
       - mkdir -p build
