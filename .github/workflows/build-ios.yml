@@ -56,7 +56,7 @@ jobs:
         echo '<plist version="1.0">' >> exportOptions.plist
         echo '<dict>' >> exportOptions.plist
         echo '    <key>method</key>' >> exportOptions.plist
-        echo '    <string>ad-hoc</string>' >> exportOptions.plist
+        echo '    <string>development</string>' >> exportOptions.plist
         echo '    <key>signingStyle</key>' >> exportOptions.plist
         echo '    <string>manual</string>' >> exportOptions.plist
         echo '</dict>' >> exportOptions.plist
