@@ -49,11 +49,18 @@ jobs:
     - name: Build iOS project
       run: xcodebuild -project build/your_project_name.xcodeproj -scheme your_project_name -configuration Development -archivePath build/your_project_name.xcarchive archive \ CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
-    #- name: Export IPA
-    #  run: xcodebuild -exportArchive -archivePath build/your_project_name.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-
+    - name: Export IPA
+      run: | 
+        cd build
+        cd your_project_name.xcarchive
+        cd Products
+        cd Applications
+        mkdir Payload
+        mv your_project_name.app Payload/
+        zip -r YTDownloader-iOS.ipa Payload/
+        mv YTDownloader-iOS.ipa ../../../
     - name: Upload IPA to GitHub Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
-        name: build
-        path: build/
+        name: Ipa
+        path: build/YTDownloader-iOS.ipa
