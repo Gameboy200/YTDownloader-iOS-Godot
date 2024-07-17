@@ -53,7 +53,7 @@ jobs:
       run: xcodebuild -exportArchive -archivePath build/your_project_name.xcarchive -exportPath build -exportOptionsPlist exportOptions.plist CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
     - name: Upload IPA to GitHub Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: your_project_name.ipa
-        path: build/your_project_name.ipa
+        name: build
+        path: build/
