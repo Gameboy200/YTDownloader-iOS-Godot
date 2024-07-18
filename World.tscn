@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://ARIALBD.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://ARIAL.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://UI.gd" type="Script" id=3]
+[ext_resource path="res://new_theme.tres" type="Theme" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 46
@@ -68,7 +70,7 @@ corner_radius_bottom_left = 10
 size = 25
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=16]
 bg_color = Color( 0.921569, 0.239216, 0.168627, 1 )
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -77,6 +79,10 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.92549, 0.152941, 0.0705882, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.905882, 0.298039, 0.235294, 1 )
@@ -95,6 +101,7 @@ margin_bottom = 1024.0
 color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [node name="UI" type="Node2D" parent="."]
+script = ExtResource( 3 )
 
 [node name="Title" type="Label" parent="UI"]
 margin_top = 40.0
@@ -125,12 +132,23 @@ clear_button_enabled = true
 placeholder_text = "Enter Youtube URL"
 caret_blink = true
 
+[node name="HTTPRequest" type="HTTPRequest" parent="UI/Panel"]
+
 [node name="Panel2" type="Panel" parent="UI"]
 margin_left = 95.0
 margin_top = 262.0
 margin_right = 479.0
 margin_bottom = 478.0
 custom_styles/panel = SubResource( 7 )
+
+[node name="TextureRect" type="TextureRect" parent="UI/Panel2"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 379.0
+margin_bottom = 211.0
+theme = ExtResource( 4 )
+expand = true
+stretch_mode = 1
 
 [node name="Label" type="Label" parent="UI"]
 margin_left = 65.0
@@ -139,18 +157,22 @@ margin_right = 509.0
 margin_bottom = 605.0
 custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
-text = "Title: "
+text = "Title: 123456789012345678901234567
+8901234567890123456789012345678
+9012345678901234567890123456789"
 align = 1
 valign = 1
 
 [node name="Label2" type="Label" parent="UI"]
 margin_left = 65.0
-margin_top = 688.0
+margin_top = 676.0
 margin_right = 509.0
-margin_bottom = 748.0
+margin_bottom = 777.0
 custom_fonts/font = SubResource( 9 )
 custom_styles/normal = SubResource( 11 )
-text = "Description: "
+text = "Description: 12345678901234567
+890123456789012345678901234567
+890123456789012345678901234..."
 align = 1
 valign = 1
 
@@ -160,7 +182,9 @@ margin_top = 838.0
 margin_right = 509.0
 margin_bottom = 898.0
 custom_fonts/font = SubResource( 15 )
-custom_styles/hover = SubResource( 12 )
+custom_styles/hover = SubResource( 16 )
 custom_styles/pressed = SubResource( 14 )
 custom_styles/normal = SubResource( 13 )
 text = "Download"
+
+[connection signal="text_entered" from="UI/Panel/LineEdit" to="UI" method="_on_LineEdit_text_entered"]
