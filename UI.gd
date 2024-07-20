@@ -2,6 +2,7 @@ extends Node2D
 
 var inputted = false
 var button_press = false
+var current_call_id = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,46 +68,61 @@ var no_user
 
 func download_mp4(url, ytt):
 	if not button_press:
+		current_call_id += 1
+		var call_id = current_call_id
 		output_file_path = "user://" + ytt + ".mp4"
 		no_user = ytt + ".mp4"
 		print(output_file_path)
 		print(no_user)
 		yield($Button, "pressed")
-		var button_press = true
-		# Create and configure HTTPRequest instance
-		var http_request = HTTPRequest.new()
-		add_child(http_request)  # Add it to the scene tree
-		http_request.connect("request_completed", self, "_on_d_request_completed")
+		if call_id == current_call_id:
+			output_file_path = "user://" + ytt + ".mp4"
+			no_user = ytt + ".mp4"
+			print(output_file_path)
+			print(no_user)
+			var button_press = true
+			# Create and configure HTTPRequest instance
+			var http_request = HTTPRequest.new()
+			add_child(http_request)  # Add it to the scene tree
+			http_request.connect("request_completed", self, "_on_d_request_completed")
 	
-		# Create the POST request
-		var header = ["Content-Type: text/plain"]
-		var body = url  # Add your POST data here if needed
-		var url2 = "http://192.168.0.95:5000/download"
-		# Send the request
-		var error = http_request.request(url2, header, false, HTTPClient.METHOD_POST, body)
+			# Create the POST request
+			var header = ["Content-Type: text/plain"]
+			var body = url  # Add your POST data here if needed
+			var url2 = "http://192.168.0.95:5000/download"
+			# Send the request
+			var error = http_request.request(url2, header, false, HTTPClient.METHOD_POST, body)
 	
-		if error != OK:
-			print("Failed to send request.")
-		else:
-			print("Request sent, waiting for response...")
-			yield(sleep(2.0), "completed")
-			progress()
+			if error != OK:
+				print("Failed to send request.")
+			else:
+				print("Request sent, waiting for response...")
+				yield(sleep(2.0), "completed")
+				progress()
 
 func _on_d_request_completed(result, response_code, headers, body):
 	var button_press = true
 	if response_code == 200:
+		var response_body = body.get_string_from_utf8()
+		var json_result = JSON.parse(response_body)
+		var response_dict = json_result.result
+		var stage = response_dict.get("file", "Unknown")
+		print(stage)
+		var filem = "http://192.168.0.95:5000/files/" + stage
+		print(filem)
+		OS.shell_open(filem)
 		# Successfully received response
-		var file = File.new()
-		print(output_file_path)
-		if file.open(output_file_path, File.WRITE) == OK:
-			file.store_buffer(body)
-			file.close()
-			print("File downloaded and saved to: " + output_file_path)
-			button_press = false
-			share_file(no_user)
-		else:
-			print("Failed to open file for writing.")
-			button_press = false
+		#var file = File.new()
+		#print(output_file_path)
+		#if file.open(output_file_path, File.WRITE) == OK:
+			#file.store_buffer(body)
+			#file.close()
+			#print("File downloaded and saved to: " + output_file_path)
+			#button_press = false
+			#share_file(no_user)
+		#else:
+			#print("Failed to open file for writing.")
+			#button_press = false
 	else:
 		print("Request failed with response code: ", response_code)
 		button_press = false
@@ -176,6 +192,7 @@ func _on_request_completed(result, response_code, headers, body):
 			set_tex_image(stage['thumbnail'])
 			inputted = true
 			download_mp4(stage['url'], ytt)
+			
 		else:
 			print("Error: Unable to parse JSON response")
 	else:

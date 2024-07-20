@@ -234,6 +234,7 @@ valign = 1
 position = Vector2( 390, 19 )
 scale = Vector2( 0.0721052, 0.0721052 )
 frames = ExtResource( 5 )
+frame = 11
 playing = true
 
 [connection signal="text_entered" from="UI/Panel/LineEdit" to="UI" method="_on_LineEdit_text_entered"]
