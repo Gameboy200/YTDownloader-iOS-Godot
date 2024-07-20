@@ -110,7 +110,8 @@ func _on_d_request_completed(result, response_code, headers, body):
 		print(stage)
 		var filem = "http://192.168.0.95:5000/files/" + stage
 		print(filem)
-		OS.shell_open(filem)
+		OS.clipboard = filem
+		OS.alert('Download url copyed to clipboard, paste it in safari to download it')
 		# Successfully received response
 		#var file = File.new()
 		#print(output_file_path)
